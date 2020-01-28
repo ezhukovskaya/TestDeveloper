@@ -11,6 +11,7 @@ import application.utils.PageApiUtils;
 import framework.browser.Browser;
 import framework.utils.PropertiesRead;
 import org.testng.Assert;
+import org.testng.ITestResult;
 import org.testng.annotations.Test;
 
 import java.util.UUID;
@@ -53,5 +54,6 @@ public class TestDeveloper {
         Assert.assertTrue(mainPage.getProjects().isProjectDisplayed(NEW_PROJECT_NAME), NEW_PROJECT_NAME + " is not added");
         mainPage.getProjects().projectClick(NEW_PROJECT_NAME);
         projectPage.clickAddTest();
+        projectPage.getAddTestForm().writeForm();
     }
 }
