@@ -1,12 +1,14 @@
 package framework.base;
 
 import framework.browser.Browser;
+import lombok.Data;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
 import java.util.List;
 
+@Data
 public abstract class BaseElement {
 
     private static final Logger log = Logger.getLogger(BaseElement.class);

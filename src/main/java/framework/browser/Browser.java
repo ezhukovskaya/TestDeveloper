@@ -9,6 +9,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
 public class Browser {
@@ -49,10 +50,16 @@ public class Browser {
         (new WebDriverWait(getBrowser(), EXPLICIT_TIMEOUT)).until(ExpectedConditions.presenceOfElementLocated(by));
     }
 
+    public static void  setWaitUnlitClickable(By by){
+        log.info("Timeout is " + EXPLICIT_TIMEOUT);
+        (new WebDriverWait(getBrowser(), EXPLICIT_TIMEOUT)).until(ExpectedConditions.elementToBeClickable(by));
+    }
+
     public static String getCurrentUrl() {
         log.info("Getting current Url");
         return getBrowser().getCurrentUrl();
     }
+
     public static void addCookie(Cookie cookie) {
         log.info("adding " + cookie.getName() + " data");
         getBrowser().manage().addCookie(cookie);
@@ -62,4 +69,24 @@ public class Browser {
         getBrowser().manage().addCookie(new Cookie(name, value));
     }
 
+    public static void refresh() {
+        getBrowser().navigate().refresh();
+    }
+
+    public static String getAttribute(By by, String attribute) {
+        return getBrowser().findElement(by).getAttribute(attribute);
+    }
+
+    public static void back() {
+        getBrowser().navigate().back();
+    }
+
+    public static void switchTo(int tabNumber, ArrayList<String> tabs) {
+        getBrowser().switchTo().window(tabs.get(tabNumber));
+    }
+
+
+    public static ArrayList<String> getTabs(){
+        return new ArrayList<String> (getBrowser().getWindowHandles());
+    }
 }
