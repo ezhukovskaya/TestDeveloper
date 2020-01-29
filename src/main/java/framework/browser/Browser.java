@@ -2,14 +2,17 @@ package framework.browser;
 
 import application.constants.Paths;
 import framework.utils.PropertiesRead;
+import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
-import org.openqa.selenium.By;
-import org.openqa.selenium.Cookie;
-import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.*;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 public class Browser {
@@ -45,14 +48,23 @@ public class Browser {
         getBrowser().manage().timeouts().implicitlyWait(TIMEOUT, TimeUnit.SECONDS);
     }
 
+    public static List<WebElement> findElements(By by){
+        return getBrowser().findElements(by);
+    }
+
     public static void setExplicitWait(By by) {
         log.info("Timeout is " + EXPLICIT_TIMEOUT);
         (new WebDriverWait(getBrowser(), EXPLICIT_TIMEOUT)).until(ExpectedConditions.presenceOfElementLocated(by));
     }
 
-    public static void  setWaitUnlitClickable(By by){
+    public static void setWaitUntilClickable(By by) {
         log.info("Timeout is " + EXPLICIT_TIMEOUT);
         (new WebDriverWait(getBrowser(), EXPLICIT_TIMEOUT)).until(ExpectedConditions.elementToBeClickable(by));
+    }
+
+    public static void setWaitUntilInvisible(By by) {
+        log.info("Timeout is " + EXPLICIT_TIMEOUT);
+        (new WebDriverWait(getBrowser(), EXPLICIT_TIMEOUT)).until(ExpectedConditions.invisibilityOfElementLocated(by));
     }
 
     public static String getCurrentUrl() {
@@ -85,8 +97,28 @@ public class Browser {
         getBrowser().switchTo().window(tabs.get(tabNumber));
     }
 
+    public static ArrayList<String> getTabs() {
+        return new ArrayList<>(getBrowser().getWindowHandles());
+    }
 
-    public static ArrayList<String> getTabs(){
-        return new ArrayList<String> (getBrowser().getWindowHandles());
+    public static void clickOnBlankArea(WebElement webElement, int x, int y) {
+        new Actions(getBrowser()).moveToElement(webElement, x, y).click().build().perform();
+    }
+
+    public static void actionClick(WebElement webElement){
+        new Actions(getBrowser()).moveToElement(webElement).doubleClick().build().perform();
+    }
+
+    public static void takeScreenshot(String path) {
+        log.info("Taking screenshot");
+        TakesScreenshot screenshot = ((TakesScreenshot) getBrowser());
+        log.info("Inserting image into the file PNG");
+        File image = screenshot.getScreenshotAs(OutputType.FILE);
+        File destFile = new File(path);
+        try {
+            FileUtils.copyFile(image, destFile);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

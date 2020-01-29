@@ -7,4 +7,5 @@ public class AddTestFormConstants {
     public static final String END_TIME = "endTime";
     public static final String ENVIRONMENT = "environment";
     public static final String BROWSER = "browser";
+    public static final String ATTACHMENT = "attachment";
 }

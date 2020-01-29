@@ -1,12 +1,12 @@
 package framework.enums;
 
-public enum TestResult {
+public enum TestResultTestRail {
     SUCCESS(1),
     FAILURE(2),
     SKIPPED(3);
     private int value;
 
-    TestResult(int value) {
+    TestResultTestRail(int value) {
         this.value = value;
     }
 

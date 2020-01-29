@@ -4,6 +4,7 @@ import framework.browser.Browser;
 import lombok.Data;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebElement;
 
 import java.util.List;
@@ -25,7 +26,11 @@ public abstract class BaseElement {
         getElement().click();
     }
 
-    private WebElement getElement() {
+    public void submit(){
+        getElement().submit();
+    }
+
+    public WebElement getElement() {
         return Browser.getBrowser().findElement(elementLocator);
     }
 
@@ -36,6 +41,10 @@ public abstract class BaseElement {
     public String getText() {
         log.info("Get text from element");
         return getElement().getText();
+    }
+
+    public Dimension getSize() {
+        return Browser.getBrowser().findElement(this.elementLocator).getSize();
     }
 
     public boolean isDisplayed() {

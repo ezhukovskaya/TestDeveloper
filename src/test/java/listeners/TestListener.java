@@ -1,6 +1,6 @@
 package listeners;
 
-import framework.enums.TestResult;
+import framework.enums.TestResultTestRail;
 import framework.utils.TestRailUtils;
 import org.apache.log4j.Logger;
 import org.testng.ITestContext;
@@ -16,17 +16,17 @@ public class TestListener implements ITestListener {
 
     @Override
     public void onTestSuccess(ITestResult iTestResult) {
-        TestRailUtils.addResult(iTestResult, TestResult.SUCCESS.getValue(), String.format("Test %s ", TestResult.SUCCESS));
+        TestRailUtils.addResult(iTestResult, TestResultTestRail.SUCCESS.getValue(), String.format("Test %s ", TestResultTestRail.SUCCESS));
     }
 
     @Override
     public void onTestFailure(ITestResult iTestResult) {
-        TestRailUtils.addResult(iTestResult, TestResult.FAILURE.getValue(), String.format("Test %s ", TestResult.FAILURE));
+        TestRailUtils.addResult(iTestResult, TestResultTestRail.FAILURE.getValue(), String.format("Test %s ", TestResultTestRail.FAILURE));
     }
 
     @Override
     public void onTestSkipped(ITestResult iTestResult) {
-        TestRailUtils.addResult(iTestResult, TestResult.SKIPPED.getValue(), String.format("Test %s ", TestResult.SKIPPED));
+        TestRailUtils.addResult(iTestResult, TestResultTestRail.SKIPPED.getValue(), String.format("Test %s ", TestResultTestRail.SKIPPED));
     }
 
     @Override
