@@ -1,10 +1,8 @@
 package tests;
 
-import application.constants.Paths;
-import application.constants.TestInfo;
-import application.constants.URLs;
-import application.constants.UserData;
+import application.constants.*;
 import application.enums.TestResultForm;
+import application.pageobjects.models.TestGroup;
 import application.pageobjects.models.User;
 import application.pageobjects.pages.CreateNewProject;
 import application.pageobjects.pages.MainPage;
@@ -14,6 +12,8 @@ import application.utils.DateUtils;
 import application.utils.PageApiUtils;
 import framework.browser.Browser;
 import framework.utils.PropertiesRead;
+import framework.utils.XMLService;
+import org.apache.http.HttpResponse;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -43,8 +43,9 @@ public class TestDeveloper {
         mainPage.getProjects().projectClick(PROJECT_TO_CLICK);
         ProjectPage projectPage = new ProjectPage();
         Assert.assertTrue(projectPage.isSorted(), "Tests are not sorted in a reverse order");
-        //HttpResponse response = PageApiUtils.getTests(Extension.XML, projectId);
-        //PageTest testList = (PageTest) XMLService.setModel(response, PageTest.class);
+        HttpResponse response = PageApiUtils.getTests(Extension.XML, projectId);
+        TestGroup testGroup = (TestGroup) XMLService.setModel(response, TestGroup.class);
+        Assert.assertTrue(projectPage.isTestMatch(testGroup), "Tests are not match with API response");
         Browser.back();
         mainPage.clickAdd();
         Browser.switchTo(Browser.getTabs().size() - 1, Browser.getTabs());
